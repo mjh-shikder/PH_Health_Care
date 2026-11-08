@@ -12,6 +12,9 @@ import type {
 
 const registerPatient = async (payload: IRegisterPatientPayload) => {
 	const { name, password, patient: patientData } = payload;
+	if (!patientData) {
+		throw new Error("Patient data is required");
+	}
 	const email = payload.email.trim().toLowerCase();
 
 	const isUserExists = await prisma.user.findUnique({
@@ -33,7 +36,7 @@ const registerPatient = async (payload: IRegisterPatientPayload) => {
 			status: UserStatus.ACTIVE,
 			emailVerified: false,
 			patient: {
-				create: { name, email, contactNumber: patientData.contactNumber},
+				create: { name, email, contactNumber: patientData.contactNumber },
 			},
 		},
 		omit: { password: true },

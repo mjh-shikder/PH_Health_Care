@@ -4,31 +4,15 @@ import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import type { IRequestUser } from "./auth.interface";
 import { AuthService } from "./auth.service";
-import { patientValidation } from "./auth.validation";
 
 
 
 // * Paitent Registration
 const registerPatient = catchAsync(async (req: Request, res: Response) => {
 
-	const payload = patientValidation.PatientRegistrationZodSchema.safeParse(req.body)
-
-	if(!payload.success){
-
-		
-		let errorMessage = ""
-		payload.error.issues.forEach((issue) => {
-			errorMessage = errorMessage +", "+ issue.message
-		})
-		
-		throw new Error(errorMessage)
-
-		// throw new Error(payload.error.issues[0].message)
-
-	}
-
+	const payload = req.body
 	
-	const result = await AuthService.registerPatient(payload.data);
+	const result = await AuthService.registerPatient(payload);
 
 	const { accessToken, refreshToken, user, patient } = result;
 

@@ -23,12 +23,15 @@
 				"noCommaOperator": "info"
 			},
 			"correctness":{
-				"noUnusedFunctionParameters": "off"
+				"noUnusedFunctionParameters": "off",
+				"noUnusedImports": "info"
+
 			
 			},
 			"style":{
 				"noNonNullAssertion": "info",
-				"useNodejsImportProtocol": "info"
+				"useNodejsImportProtocol": "info",
+				"useImportType": "off"
 			}
 		}
 	},
