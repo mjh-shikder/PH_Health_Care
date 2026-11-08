@@ -10,8 +10,8 @@ export interface IRegisterPatientPayload {
 	email: string;
 	password: string;
 	patient?: {
-		contactNumber? : string
-	}
+		contactNumber?: string;
+	};
 }
 
 export interface IRequestUser {

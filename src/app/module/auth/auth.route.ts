@@ -2,20 +2,25 @@ import { Router } from "express";
 import { Role } from "../../../generated/prisma/enums";
 import { auth } from "../../middleware/checkAuth";
 import { AuthController } from "./auth.controller";
-import { patientValidation } from "./auth.validation";
+import { userValidation } from "./auth.validation";
 import { validateRequest } from "../../middleware/validateRequest";
 
 const router = Router();
 
 router.post(
-  "/register", validateRequest(patientValidation.PatientRegistrationZodSchema),
-  AuthController.registerPatient,
+	"/register",
+	validateRequest(userValidation.PatientRegistrationZodSchema),
+	AuthController.registerPatient,
 );
-router.post("/login", AuthController.loginUser);
+router.post(
+	"/login",
+	validateRequest(userValidation.LoginZodSchema),
+	AuthController.loginUser,
+);
 router.get(
-  "/me",
-  auth(Role.ADMIN, Role.DOCTOR, Role.PATIENT, Role.SUPER_ADMIN),
-  AuthController.getMe,
+	"/me",
+	auth(Role.ADMIN, Role.DOCTOR, Role.PATIENT, Role.SUPER_ADMIN),
+	AuthController.getMe,
 );
 router.post("/refresh-token", AuthController.refreshToken);
 export const AuthRoutes = router;
