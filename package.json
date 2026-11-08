@@ -8,11 +8,10 @@
         "build": "tsc",
         "start": "node dist/src/server.js",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "format:check" : "npx biome format ./src",
-        "format:fix" : "npx biome format --write ./src",
-        "lint:check":"npx biome lint",
-        "lint:fix":"npx biome lint --write ./src"
-
+        "format:check": "npx biome format ./src",
+        "format:fix": "npx biome format --write ./src",
+        "lint:check": "npx biome lint",
+        "lint:fix": "npx biome lint --write ./src"
     },
     "keywords": [],
     "author": "",
@@ -28,7 +27,8 @@
         "express": "^5.2.1",
         "http-status": "^2.1.0",
         "jsonwebtoken": "^9.0.3",
-        "pg": "^8.22.0"
+        "pg": "^8.22.0",
+        "zod": "^4.6.7"
     },
     "devDependencies": {
         "@biomejs/biome": "2.6.4",
