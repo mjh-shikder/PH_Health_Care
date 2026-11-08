@@ -9,7 +9,7 @@ export interface IRegisterPatientPayload {
 	name: string;
 	email: string;
 	password: string;
-	patient: {
+	patient?: {
 		contactNumber? : string
 	}
 }
