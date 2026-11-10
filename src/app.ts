@@ -13,7 +13,7 @@ import { notFound } from "./app/middleware/notFound";
 import { AuthRoutes } from "./app/module/auth/auth.route";
 import { email, z } from "zod";
 import { redisClient } from "./app/lib/redis";
-import crypto from "crypto"
+import crypto from "crypto";
 
 const app: Application = express();
 
@@ -34,10 +34,8 @@ app.use(cookieParser());
 app.use("/api/v1/auth", AuthRoutes);
 
 app.get("/test", async (req: Request, res: Response, next: NextFunction) => {
-	
 	try {
-		
-		const otp = crypto.randomInt(100000, 1000000)
+		const otp = crypto.randomInt(100000, 1000000);
 
 		// await redisClient.set("forgot-password-otp:patient1@mail.com", "231236", {
 		// 	expiration: {
@@ -51,9 +49,7 @@ app.get("/test", async (req: Request, res: Response, next: NextFunction) => {
 			message: "Welcome to PH Healthcare System Backend",
 			data: otp,
 		});
-	} catch (error) {
-		
-	}
+	} catch (error) {}
 });
 
 // Basic route
