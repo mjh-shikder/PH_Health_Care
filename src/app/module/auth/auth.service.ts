@@ -21,6 +21,7 @@ import { googleClient } from "../../lib/googleAuth";
 import { ne } from "zod/v4/locales/index.js";
 import crypto from "crypto";
 import { redisClient } from "../../lib/redis";
+import { transporter } from "../../lib/nodemailer";
 
 const registerPatient = async (payload: IRegisterPatientPayload) => {
 	const { name, password, patient: patientData } = payload;
@@ -376,6 +377,17 @@ const forgotPassword = async (paload: IForgotPasswordPayload) => {
 			value: 5 * 60,
 		},
 	});
+
+	await transporter.sendMail({
+		from: config.email_sender,
+		to: isUserExists.email,
+		subject: "Forgot Password OTP - PH Health Care",
+		text: `Your Forgot Password OTP is ${otp}`
+
+	})
+
+	
+
 };
 
 const resetPassword = async (paload: IResetPasswordPayload) => {
@@ -437,6 +449,17 @@ const resetPassword = async (paload: IResetPasswordPayload) => {
 
 	//* Deleting the otp after password change
 	await redisClient.del([key]);
+
+	
+	//* Sending mail after password reset
+		await transporter.sendMail({
+		from: config.email_sender,
+		to: isUserExists.email,
+		subject: "Password Changed - PH Health Care",
+		text: `Your Password changed successfully`
+
+	})
+
 };
 
 export const AuthService = {

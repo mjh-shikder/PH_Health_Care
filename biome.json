@@ -24,7 +24,9 @@
 			},
 			"correctness":{
 				"noUnusedFunctionParameters": "off",
-				"noUnusedImports": "off"
+				"noUnusedImports": "off",
+				"noUnusedVariables": "info",
+				
 
 			
 			},
