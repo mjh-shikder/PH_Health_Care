@@ -10,6 +10,8 @@ export default {
 	bak_url: process.env.APP_URL,
 	frontend_url: process.env.FRONTEND_URL,
 
+	google_client_id: process.env.GOOGLE_CLIENT_ID!,
+
 	//* JWT
 	bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
 	jwt_access_secret: process.env.JWT_ACCESS_SECRET!,
