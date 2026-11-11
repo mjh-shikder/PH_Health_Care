@@ -6,7 +6,12 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"ignoreUnknown": false
+		"ignoreUnknown": false,
+		"includes": [
+			"**",
+			"!src/app/templates",
+			"!src/generated"
+		]
 	},
 	"formatter": {
 		"enabled": true,
@@ -35,7 +40,12 @@
 				"useNodejsImportProtocol": "info",
 				"useImportType": "off"
 			}
-		}
+		},
+		"includes": [
+			"**",
+			"!src/app/templates",
+			"!src/generated"
+		]
 	},
 	"javascript": {
 		"formatter": {

@@ -22,6 +22,8 @@ import { ne } from "zod/v4/locales/index.js";
 import crypto from "crypto";
 import { redisClient } from "../../lib/redis";
 import { transporter } from "../../lib/nodemailer";
+import ejs, { name } from "ejs"
+import path from "path";
 
 const registerPatient = async (payload: IRegisterPatientPayload) => {
 	const { name, password, patient: patientData } = payload;
@@ -378,11 +380,22 @@ const forgotPassword = async (paload: IForgotPasswordPayload) => {
 		},
 	});
 
+	const templatePath = path.join(process.cwd(), "src/app/templates/forgot-password.ejs")
+
+	const templateData = {
+		name: isUserExists.name,
+		otp,
+		expirationMinutes : 5
+	}
+
+	const html = await ejs.renderFile(templatePath, templateData)
+
 	await transporter.sendMail({
 		from: config.email_sender,
 		to: isUserExists.email,
 		subject: "Forgot Password OTP - PH Health Care",
-		text: `Your Forgot Password OTP is ${otp}`
+		// text: `Your Forgot Password OTP is ${otp}`
+		html
 
 	})
 
@@ -450,13 +463,20 @@ const resetPassword = async (paload: IResetPasswordPayload) => {
 	//* Deleting the otp after password change
 	await redisClient.del([key]);
 
+
+	const templatePath = path.join(process.cwd(), "src/app/templates/reset-password-success.ejs")
+
+	const templateData = {name: isUserExists.name}
+
+	const html = await ejs.renderFile(templatePath, templateData);
 	
 	//* Sending mail after password reset
 		await transporter.sendMail({
 		from: config.email_sender,
 		to: isUserExists.email,
 		subject: "Password Changed - PH Health Care",
-		text: `Your Password changed successfully`
+		// text: `Your Password changed successfully`
+		html
 
 	})
 

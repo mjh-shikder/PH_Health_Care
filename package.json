@@ -20,10 +20,12 @@
     "dependencies": {
         "@prisma/adapter-pg": "^7.9.1",
         "@prisma/client": "^7.9.1",
+        "@types/ejs": "^3.1.5",
         "bcryptjs": "^3.0.3",
         "cookie-parser": "^1.4.7",
         "cors": "^2.8.6",
         "dotenv": "^17.4.2",
+        "ejs": "^7.0.2",
         "express": "^5.2.1",
         "google-auth-library": "^11.3.4",
         "http-status": "^2.1.0",
