@@ -176,7 +176,7 @@ const verifyPatientEmail = async (payload: IVerifyEmailPayload) => {
 	//? Dleting Patient Registration data from Redis after Creating user into DB
 	await redisClient.del(patientRegistrationKey)
 
-	//* Sending Wlcome email 
+	//* Sending Welcome email 
 		const templatePath = path.join(process.cwd(), "src/app/templates/patient-welcome-email.ejs")
 
 	const templateData = {
@@ -433,6 +433,23 @@ const googleLogin = async (payload: IGoogleLoginPayload) => {
 					},
 				},
 			});
+
+	//* Sending Welcome email 
+		const templatePath = path.join(process.cwd(), "src/app/templates/patient-welcome-email.ejs")
+
+	const templateData = {
+		name : user.name,
+		}
+
+	const html = await ejs.renderFile(templatePath, templateData)
+
+	await transporter.sendMail({
+		from: config.email_sender,
+		to: user.email,
+		subject: "Wlcome To - PH Health Care",
+		html
+	});
+
 		}
 	}
 
