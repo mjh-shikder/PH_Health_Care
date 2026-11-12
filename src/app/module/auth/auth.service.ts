@@ -81,6 +81,7 @@ const registerPatient = async (payload: IRegisterPatientPayload) => {
 		},
 	});
 
+	//* Sending Email with Verification OTP
 	const templatePath = path.join(process.cwd(), "src/app/templates/registration-user-otp.ejs")
 
 	const templateData = {
@@ -97,13 +98,11 @@ const registerPatient = async (payload: IRegisterPatientPayload) => {
 		subject: "Account verification OTP - PH Health Care",
 		// text: `Your Forgot Password OTP is ${otp}`
 		html
-
 	});
-
-
 };
 
 
+//* Very patient email function 
 const verifyPatientEmail = async (payload: IVerifyEmailPayload) => { 
 
 	const {otp}= payload
@@ -177,6 +176,24 @@ const verifyPatientEmail = async (payload: IVerifyEmailPayload) => {
 	//? Dleting Patient Registration data from Redis after Creating user into DB
 	await redisClient.del(patientRegistrationKey)
 
+	//* Sending Wlcome email 
+		const templatePath = path.join(process.cwd(), "src/app/templates/patient-welcome-email.ejs")
+
+	const templateData = {
+		name : createdUser.name,
+		}
+
+	const html = await ejs.renderFile(templatePath, templateData)
+
+	await transporter.sendMail({
+		from: config.email_sender,
+		to: email,
+		subject: "Wlcome To - PH Health Care",
+		html
+	});
+
+
+	//* Login or set access and refresh token. 
 	const { patient, ...user } = createdUser;
 	const jwtPayload = {
 		userId: user.id,
